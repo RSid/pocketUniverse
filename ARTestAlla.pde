@@ -52,18 +52,35 @@ void draw()
   x = sin(radians(angle))*defaultRadius;
   y = cos(radians(angle))*defaultRadius;
   
+  buildSun();
+  
+  buildDefaultOrbitPlanet();
+  
+  buildWackyOrbitPlanet();
+  
+  buildPlanetWithObliqueOrbit();
+  
+  nya.endTransform();
+}
+
+void buildSun() {
   pushMatrix();
   fill(255, 204, 0);
+  texture(sunTexture);
   sphere(20);
   popMatrix();
-  
+}
+
+void buildDefaultOrbitPlanet() {
   pushMatrix();
   translate(x, 0, y);
   fill(77, 148, 255);
   sphere(10);
   angle += frequency;
   popMatrix();
-  
+}
+
+void buildWackyOrbitPlanet() {
   pushMatrix();
   float x2 = sin(radians(angle2))*defaultRadius ;
   float y2 = cos(radians(angle2))*defaultRadius ;
@@ -72,20 +89,16 @@ void draw()
   sphere(6);
   angle2 += frequency + 3;
   popMatrix();
-  
-  pushMatrix();
-  buildPlanetWithObliqueOrbit();
-  popMatrix();
-  
-  nya.endTransform();
 }
 
 void buildPlanetWithObliqueOrbit() {
+  pushMatrix();
   fill(172, 57, 57);
   translate(x + 30, orbitHeight, y + 30);
   sphere(5);
   angle += frequency;
   orbitRisesAndFalls();
+  popMatrix();
 }
 
 void orbitRisesAndFalls() {
