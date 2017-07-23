@@ -26,6 +26,10 @@ float x, y;
 float frequency = 2;
 float angle;
 float radius = 60;
+float orbitHeight = 0;
+float orbitMax = 50;
+
+boolean orbitRising = true;
 
 void draw()
 {
@@ -40,21 +44,57 @@ void draw()
     return;
   }
   nya.beginTransform(0);
-  fill(0,0,255);
+  
   lights();
+  noStroke();
   
   x = sin(radians(angle))*radius;
   y = cos(radians(angle))*radius;
   
   pushMatrix();
+  fill(255, 204, 0);
   sphere(20);
   popMatrix();
   
-  
+  pushMatrix();
   translate(x, 0, y);
+  fill(77, 148, 255);
   sphere(10);
   angle += frequency;
+  popMatrix();
+  
+  pushMatrix();
+  fill(172, 57, 57);
+  translate(x-10, orbitHeight, y);
+  sphere(5);
+  angle += frequency;
+  orbitRisesAndFalls();
+  
+  popMatrix();
+  
   
  
   nya.endTransform();
+}
+
+float getCoordinate(float angle, float radius) {
+  return sin(radians(angle))*radius;
+}
+
+void orbitRisesAndFalls() {
+  if(orbitRising == true && orbitHeight < orbitMax) {
+    orbitHeight +=frequency;
+  }
+  if(orbitRising == true && orbitHeight == orbitMax) {
+    orbitRising = false;
+    orbitHeight -=frequency;
+  }
+  
+  if(orbitRising == false && orbitHeight > -orbitMax) {
+    orbitHeight -=frequency;
+  }
+  if(orbitRising == false && orbitHeight == -orbitMax) {
+    orbitRising = true;
+    orbitHeight +=frequency;
+  }
 }
