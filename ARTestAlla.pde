@@ -25,7 +25,8 @@ void setup() {
 float x, y;
 float frequency = 2;
 float angle;
-float radius = 60;
+float angle2 = angle;
+float defaultRadius = 60;
 float orbitHeight = 0;
 float orbitMax = 50;
 
@@ -48,8 +49,8 @@ void draw()
   lights();
   noStroke();
   
-  x = sin(radians(angle))*radius;
-  y = cos(radians(angle))*radius;
+  x = sin(radians(angle))*defaultRadius;
+  y = cos(radians(angle))*defaultRadius;
   
   pushMatrix();
   fill(255, 204, 0);
@@ -64,21 +65,27 @@ void draw()
   popMatrix();
   
   pushMatrix();
-  fill(172, 57, 57);
-  translate(x-10, orbitHeight, y);
-  sphere(5);
-  angle += frequency;
-  orbitRisesAndFalls();
-  
+  float x2 = sin(radians(angle2))*defaultRadius ;
+  float y2 = cos(radians(angle2))*defaultRadius ;
+  translate(x2, 0, y2);
+  fill(200, 148, 255);
+  sphere(6);
+  angle2 += frequency + 3;
   popMatrix();
   
+  pushMatrix();
+  buildPlanetWithObliqueOrbit();
+  popMatrix();
   
- 
   nya.endTransform();
 }
 
-float getCoordinate(float angle, float radius) {
-  return sin(radians(angle))*radius;
+void buildPlanetWithObliqueOrbit() {
+  fill(172, 57, 57);
+  translate(x + 30, orbitHeight, y + 30);
+  sphere(5);
+  angle += frequency;
+  orbitRisesAndFalls();
 }
 
 void orbitRisesAndFalls() {
